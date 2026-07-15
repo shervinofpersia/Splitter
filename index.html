@@ -272,7 +272,7 @@
         <div class="row" style="margin-top:16px; align-items:center">
           <input id="fileInput" class="file-hidden" type="file" accept=".txt,.conf,.json" />
           <div style="flex:1">
-            <div class="small">پروکسی‌های CORS (برای منابع محافظت‌شده)</div>
+            <div class="small">CORS</div>
             <input id="proxyInput" type="text" value="https://corsproxy.io/?, https://api.allorigins.win/raw?url=" dir="ltr" />
           </div>
         </div>
@@ -289,23 +289,23 @@
         </div>
         <textarea id="sampleInput" style="margin-top:10px; min-height:92px" placeholder="(اختیاری) نمونه کانفیگ‌های ایده آل و فعالت رو بده تا از روی الگوشون مجموعه ی سازگارتری استخراج کنم..."></textarea>
         <div class="small" id="smartHint" style="margin-top:10px; display:none">
-          الگوی شناسایی شده: Proto=<span class="kbd" id="sProto">?</span> Net=<span class="kbd" id="sNet">?</span> Port=<span class="kbd" id="sPort">?</span>
+          الگوی شناسایی شده: Prejex=<span class="kbd" id="sProto">?</span> Net=<span class="kbd" id="sNet">?</span> Port=<span class="kbd" id="sPort">?</span>
         </div>
       </div>
 
       <div class="bd" id="manualBox" style="display:none">
         <div class="grid2">
           <div>
-            <div class="small">پروتکل‌ها</div>
+            <div class="small">Protocols</div>
             <div class="checks" id="protocolChecks"></div>
           </div>
           <div>
-            <div class="small">شبکه (Transport)</div>
+            <div class="small">Transport</div>
             <div class="checks" id="netChecks"></div>
           </div>
         </div>
         <div style="margin-top:16px">
-          <div class="small">پورت‌ها (مثال: 443,80,2053 - خالی = نامحدود)</div>
+          <div class="small">Ports (مثال: 443,80,2053 - خالی = فول رنج)</div>
           <input id="portsManual" type="text" placeholder="443,80,2053" dir="ltr" />
         </div>
       </div>
@@ -313,7 +313,7 @@
       <div class="bd" style="padding-top:0">
         <button id="runBtn" class="btn" onclick="processAll()">
           <span id="runIcon">♻️</span>
-          <span id="runText">پردازش و رتبه‌بندی</span>
+          <span id="runText"> کنـد و کـاو </span>
         </button>
       </div>
     </section>
@@ -659,11 +659,41 @@
       let raw = document.getElementById("mainInput").value.trim();
 
       // اعمال منابع پیش‌فرض در صورت خالی بودن ورودی
-      if(!raw) {
-        log("ورودی خالی است. در حال بارگذاری منابع پیش‌فرض...", "wa");
-        raw = "https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt\nhttps://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile-2.txt\nhttps://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_VLESS_RUS_mobile.txt\nhttps://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/WHITE-CIDR-RU-checked.txt\nhttps://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_VLESS_RUS.txt\nhttps://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_SS+All_RUS.txt\nhttps://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/FRAGMENT\nhttps://raw.githubusercontent.com/ShadowException/VPN/refs/heads/main/configs/VPN-cat\nhttps://raw.githubusercontent.com/F0rc3Run/F0rc3Run/main/splitted-by-protocol/vless.txt\nhttps://raw.githubusercontent.com/barry-far/V2ray-config/main/Sub1.txt\nhttps://raw.githubusercontent.com/barry-far/V2ray-Config/main/Sub2.txt\nhttps://raw.githubusercontent.com/barry-far/V2ray-Config/main/Sub3.txt\nhttps://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/V2Ray-Config-By-EbraSha.txt\nhttps://raw.githubusercontent.com/MohammadBahemmat/V2ray-Collector/main/subscriptions/all.txt\nhttps://raw.githubusercontent.com/ALIILAPRO/v2rayNG-Config/main/sub.txt\nhttps://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub\nhttps://raw.githubusercontent.com/mfuu/v2ray/master/v2ray.txt\nhttps://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt\nhttps://mifa.world/ss\nhttps://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/FRAGMENT\nhttps://empty-mouse-fbb7.alizareh4024.workers.dev/sync?sub=%D8%B3%D9%88%D8%B3%D9%85%D8%A7%D8%B1%F0%9F%A6%8E\nhttps://raw.githubusercontent.com/pytimusprime/FreeV2ray/refs/heads/main/all_servers.txt\nhttps://raw.githubusercontent.com/ThomasJasperthecat/sub/main/sublist1.txt\nhttps://raw.githubusercontent.com/masir-sefid/Sub/main/@Masir_Sefid.txt\nhttps://sub.whitedns.one/sub/mihomo.yaml\nhttp://main.pythash.tr/FRkh99yBGCllN/01736620-2086-4c0b-a86e-52ebfe64dd12/#pythash\nhttps://raw.githubusercontent.com/masir-sefid/Sub/main/Telegram-Channel-@Masir_Sefid.txt\nhttps://c6et83fe1u99lr8j5w4s9iwik9565bqx.pages.dev/sub/fragment/g4lWgI*%40zehfoOEK?app=xray#%F0%9F%92%A6%20BPB%20Fragment\nhttps://raw.githubusercontent.com/AmyraxVPN-Main/AmyraxVPN/refs/heads/main/AmyraxVPN.txt\nhttps://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html\nhttps://raw.githubusercontent.com/MahsaNetConfigTopic/config/refs/heads/main/xray_final.txt\nhttps://raw.githubusercontent.com/barry-far/V2ray-config/main/All_Configs_base64_Sub.txt\nhttps://v2.alicivil.workers.dev";
-        document.getElementById("mainInput").value = raw;
-      }
+      // اعمال منابع پیش‌فرض در صورت خالی بودن ورودی
+if (!raw) {
+  log("ورودی خالی است. در حال بارگذاری منابع پیش‌فرض...", "wa");
+  raw = `https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt
+https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile-2.txt
+https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_VLESS_RUS_mobile.txt
+https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/WHITE-CIDR-RU-checked.txt
+https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_VLESS_RUS.txt
+https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_SS+All_RUS.txt
+https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/FRAGMENT
+https://raw.githubusercontent.com/ShadowException/VPN/refs/heads/main/configs/VPN-cat
+https://raw.githubusercontent.com/F0rc3Run/F0rc3Run/main/splitted-by-protocol/vless.txt
+https://raw.githubusercontent.com/barry-far/V2ray-config/main/Sub1.txt
+https://raw.githubusercontent.com/barry-far/V2ray-Config/main/Sub2.txt
+https://raw.githubusercontent.com/barry-far/V2ray-Config/main/Sub3.txt
+https://raw.githubusercontent.com/ebrasha/free-v2ray-public-list/refs/heads/main/V2Ray-Config-By-EbraSha.txt
+https://raw.githubusercontent.com/MohammadBahemmat/V2ray-Collector/main/subscriptions/all.txt
+https://raw.githubusercontent.com/ALIILAPRO/v2rayNG-Config/main/sub.txt
+https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub
+https://raw.githubusercontent.com/mfuu/v2ray/master/v2ray.txt
+https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt
+https://mifa.world/ss
+https://raw.githubusercontent.com/Mosifree/-FREE2CONFIG/refs/heads/main/FRAGMENT
+https://empty-mouse-fbb7.alizareh4024.workers.dev/sync?sub=%D8%B3%D9%88%D8%B3%D9%85%D8%A7%D8%B1%F0%9F%A6%8E
+https://raw.githubusercontent.com/pytimusprime/FreeV2ray/refs/heads/main/all_servers.txt
+https://raw.githubusercontent.com/ThomasJasperthecat/sub/main/sublist1.txt
+https://raw.githubusercontent.com/masir-sefid/Sub/main/@Masir_Sefid.txt
+https://raw.githubusercontent.com/masir-sefid/Sub/main/Telegram-Channel-@Masir_Sefid.txt
+https://raw.githubusercontent.com/AmyraxVPN-Main/AmyraxVPN/refs/heads/main/AmyraxVPN.txt
+https://raw.githubusercontent.com/arshiacomplus/v2rayExtractor/refs/heads/main/mix/sub.html
+https://raw.githubusercontent.com/MahsaNetConfigTopic/config/refs/heads/main/xray_final.txt
+https://raw.githubusercontent.com/barry-far/V2ray-config/main/All_Configs_base64_Sub.txt
+https://v2.alicivil.workers.dev`;
+  document.getElementById("mainInput").value = raw;
+}
 
       log("Reading input sources…", "in");
 
