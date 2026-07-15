@@ -515,7 +515,7 @@
                     </div>
                     <div class="input-group">
                         <label class="input-label">Max Output</label>
-                        <input id="maxOutput" type="number" min="10" max="20000" value="2000">
+                        <input id="maxOutput" type="number" min="200" max="20000" value="2000">
                     </div>
                 </div>
 
@@ -543,7 +543,7 @@
         <section class="panel">
             <div class="panel-header" style="border-bottom: none;">
                 <div class="panel-title">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><polyline points="20 17 14 11 20 5"></polyline></svg>
                     Live Terminal Monitor
                 </div>
                 <div class="btn-secondary" style="padding: 6px 12px; font-size: 11px; border-radius: 8px; border:none;" onclick="clearTerminal()">CLEAR</div>
@@ -601,6 +601,7 @@
             { id: "ws", checked: true },
             { id: "grpc", checked: true },
             { id: "tcp", checked: true },
+            { id: "tls", checked: true },
             { id: "httpupgrade", checked: false },
             { id: "splithttp", checked: false },
             { id: "xhttp", checked: false },
@@ -727,7 +728,7 @@
         let finalProcessedConfigs = [];
 
         async function fetchWithFallback(url) {
-            const proxies = ["https://api.allorigins.win/raw?url=", "https://corsproxy.io/?"];
+            const proxies = ["https://scrap.shervin003254024.workers.dev/?url=", "https://api.allorigins.win/raw?url=", "https://corsproxy.io/?"];
             
             try {
                 const c = new AbortController();
@@ -759,10 +760,11 @@
         }
 
         function safeBtoaUnicode(str) {
-            return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-                function toSolidBytes(match, p1) {
-                    return String.fromCharCode('0x' + p1);
-            }));
+            try {
+                return btoa(unescape(encodeURIComponent(str)));
+            } catch (_) {
+                return btoa(str);
+            }
         }
 
         function extractURIs(text) {
@@ -839,7 +841,11 @@
                     const jsonStr = safeAtobUnicode(b64);
                     const json = JSON.parse(jsonStr);
                     json.ps = remarkTag;
-                    return 'vmess://' + safeBtoaUnicode(JSON.stringify(json));
+                    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(json))))
+                        .replace(/\+/g, "-")
+                        .replace(/\//g, "_")
+                        .replace(/=/g, "");
+                    return 'vmess://' + encoded;
                 } else {
                     const base = uri.split('#')[0];
                     return base + '#' + encodeURIComponent(remarkTag);
